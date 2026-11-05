@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10110e" />
+    <title>Compteur infini</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%2310110e' width='32' height='32'/%3E%3Ctext x='4' y='24' fill='%23dff25a' font-size='18' font-family='Arial'%3E1%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Oswald:wght@500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <section id="gate" class="gate">
+      <p class="eyebrow">un nombre pour tout le monde</p>
+      <h1>Compteur<br />infini</h1>
+      <p class="lead">
+        Tout le monde partage le même nombre.
+        Chaque appui sur ta touche ajoute 1, même quand tu es dans un jeu.
+      </p>
+      <form id="join-form">
+        <label for="pseudo">Pseudo</label>
+        <input id="pseudo" name="pseudo" maxlength="16" autocomplete="nickname" spellcheck="false" required placeholder="ex. kayn" autofocus />
+        <button class="primary" type="submit">Rejoindre</button>
+        <p id="join-error" class="error" hidden></p>
+      </form>
+    </section>
+
+    <main id="app" hidden>
+      <header class="top">
+        <div>
+          <p class="eyebrow">compteur partagé</p>
+          <p id="who" class="who"></p>
+        </div>
+        <form id="rename-form" class="rename">
+          <input id="rename" maxlength="16" spellcheck="false" aria-label="Nouveau pseudo" />
+          <button class="ghost" type="submit">Renommer</button>
+        </form>
+      </header>
+
+      <section class="board" aria-live="polite">
+        <p class="score-label">total</p>
+        <p id="total" class="score">0</p>
+        <div class="score-meta">
+          <p id="mine">tes appuis 0</p>
+          <p id="last">En attente du premier appui.</p>
+        </div>
+        <button id="reset" class="ghost" type="button">Remettre à zéro</button>
+      </section>
+
+      <div class="panels">
+        <section class="card">
+          <p class="eyebrow">ta touche</p>
+          <p id="key-label" class="key-label">aucune</p>
+          <div class="actions">
+            <button id="bind" class="primary" type="button">Choisir</button>
+          </div>
+          <p id="bind-hint" class="hint"></p>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <p class="eyebrow">dans un jeu</p>
+            <p id="agent-status" class="status">agent arrêté</p>
+          </div>
+          <p class="hint">
+            Le site n’entend pas le clavier quand le jeu est devant. Lance l’agent et laisse sa fenêtre ouverte : il n’écoute que ta touche, rien d’autre.
+          </p>
+          <pre id="agent-cmd"></pre>
+          <div class="actions">
+            <button id="copy-cmd" class="primary" type="button">Copier la commande</button>
+            <button id="copy-token" class="ghost" type="button">Copier le jeton</button>
+            <a id="download-agent" class="ghost" href="/download/agent.py" download="agent.py">Télécharger l'agent</a>
+            <button id="download-bat" class="ghost" type="button">Télécharger le lanceur</button>
+          </div>
+          <p class="hint">
+            Sur cet ordinateur : double-clique sur agent\lancer-agent.bat, ou colle la commande dans un terminal ouvert dans le dossier compteur-infini.
+            Les autres joueurs téléchargent l'agent et le lanceur, les placent dans le même dossier, puis double-cliquent sur le lanceur.
+            Si le jeu est en administrateur, lance l'agent en administrateur. Certains anti-cheats bloquent cette écoute.
+          </p>
+        </section>
+      </div>
+
+      <section class="roster">
+        <div class="card-head">
+          <p class="eyebrow">joueurs</p>
+          <p id="online" class="hint"></p>
+        </div>
+        <ul id="players"></ul>
+      </section>
+
+      <section id="share" class="share" hidden>
+        <p class="eyebrow">même réseau</p>
+        <p id="lan" class="hint"></p>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
